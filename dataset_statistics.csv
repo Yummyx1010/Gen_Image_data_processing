@@ -1,0 +1,9 @@
+generator,image_count,jpg,jpeg,png
+ADM,2500,2500,0,0
+BigGAN,2500,2500,0,0
+glide,2500,2500,0,0
+Midjourney,2500,2500,0,0
+Nature,5828,0,5828,0
+stable_diffusion_v_1_5,2500,2500,0,0
+VQDM,2500,2500,0,0
+wukong,2500,2500,0,0
