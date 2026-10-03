@@ -1,0 +1,29 @@
+{
+  "loss": 0.2508179320526706,
+  "accuracy": 0.9023771059312254,
+  "samples": 8666,
+  "smoke": false,
+  "split": "test",
+  "epoch": 1,
+  "threshold": 0.5,
+  "positive_class": "fake",
+  "effective_config": {
+    "baseline": "A",
+    "data_root": "F:\\AAA-nz-auckland-homework\\760\\Group 12-Milestone 1\\archive",
+    "split_dir": ".",
+    "output_dir": "results/training",
+    "seed": 4,
+    "epochs": 1,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "device": "auto",
+    "frequency_factory": "models.frequency_encoder:FrequencyEncoder",
+    "frequency_kwargs": {},
+    "frequency_input": null,
+    "smoke": false
+  },
+  "checkpoint": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing\\results\\training\\Baseline_A_seed4_20260918_085636_385874\\best.pt"
+}

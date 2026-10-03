@@ -1,0 +1,20 @@
+{
+  "python": "3.11.2 (tags/v3.11.2:878ead1, Feb  7 2023, 16:38:35) [MSC v.1934 64 bit (AMD64)]",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.3.4",
+  "device": "cpu",
+  "smoke": false,
+  "source_sha256": {
+    "dataset.py": "aba33fd839b557c2fc4968ead6e21a5a660c0d111a9d4ffca9932a6fbfe8bce8",
+    "models/baseline_a.py": "75cb01dcebca8c4f67691d0a9221864851a107e9a54a465be8168e0d03935c12",
+    "models/baseline_a_adapter.py": "4722393d50e4826d032bc5e426aa8b3c5494c51ea6bad1b3d76fd4ecab53ffbc",
+    "models/baseline_b.py": "36aa5ea7adee26fb0fc7e390d70a7428df9f8a7758aa71e0f4b2b8230db689c1",
+    "models/spatial_encoder.py": "ab2bd686f27f5f4e22af4c572b704956e0432e784220324f5508153414049f66",
+    "training/config.py": "7fa44b68619b8a917485d9defc438dc81eef437771049dac725e81142d7e16a3",
+    "training/data.py": "e21604e111cb2defb4c2759ca3dd172ea0925cb849665c440bf71b6bea96714f",
+    "training/smoke.py": "a496ec8a54224209cc64f2a5e52233d3515fb4d587734539ed8df273e620e8ca",
+    "training/train.py": "18b932d73beb140498fad07eec4df3b274203e06da2809071b8c93108782a613"
+  },
+  "spatial_weights": "M2 ResNet18_Weights.DEFAULT",
+  "trainable_parameters": 513
+}

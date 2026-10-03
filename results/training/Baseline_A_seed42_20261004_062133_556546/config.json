@@ -1,0 +1,18 @@
+{
+  "baseline": "A",
+  "data_root": "F:\\AAA-nz-auckland-homework\\760\\Group 12-Milestone 1\\archive",
+  "split_dir": ".",
+  "output_dir": "results/training",
+  "seed": 42,
+  "epochs": 10,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "num_workers": 0,
+  "device": "cpu",
+  "frequency_factory": "models.frequency_encoder:FrequencyEncoder",
+  "frequency_kwargs": {},
+  "frequency_input": "normalized",
+  "smoke": false
+}
