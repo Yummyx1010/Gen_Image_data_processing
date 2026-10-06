@@ -1,0 +1,31 @@
+{
+  "phase": "result_compare_lr4e-4_seed42",
+  "architecture": "pretrained_fusion_v1",
+  "model_description": "M4 Baseline B: frozen M2 spatial encoder, trainable M3 pretrained frequency encoder, 768-D fusion and nonlinear classifier",
+  "model_source": [
+    "models/spatial_encoder.py",
+    "models/frequency_encoder_pretrained.py",
+    "models/pretrained_baseline_b.py"
+  ],
+  "learning_rate_candidates": [
+    0.0004
+  ],
+  "learning_rate": 0.0004,
+  "max_epochs": 30,
+  "early_stopping_enabled": true,
+  "early_stopping_warmup_epochs": 10,
+  "early_stopping_patience": 5,
+  "early_stopping_min_delta": 0.0,
+  "batch_size": 32,
+  "sampler": "WeightedRandomSampler",
+  "loss": "BCEWithLogitsLoss",
+  "optimizer": "Adam",
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "selection_metric": "validation_auroc",
+  "freeze_frequency_backbone": false,
+  "hidden_dim": 128,
+  "dropout": 0.3,
+  "device": "cuda",
+  "output_dir": "results/result_compare"
+}
