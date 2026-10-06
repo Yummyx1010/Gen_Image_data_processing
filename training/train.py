@@ -12,13 +12,14 @@ import os
 from pathlib import Path
 import random
 import sys
+import time
+from uuid import uuid4
 
 import numpy as np
 import torch
 from torch import nn
 
 from models.baseline_a_adapter import FrozenBaselineA
-from models.baseline_b import BaselineB
 from .config import ROOT, TrainConfig, resolve_path
 from .data import inspect_splits, make_loader
 
@@ -66,6 +67,7 @@ def build_model(config):
                 "including agreed FFT/log-spectrum preprocessing and returning [B,256]."
             ) from error
         frequency = frequency_factory(**config.frequency_kwargs)
+        from models.baseline_b import BaselineB
         return BaselineB(frequency, config.frequency_input)
 
 
@@ -151,10 +153,38 @@ def load_checkpoint(path):
     return checkpoint
 
 
-def save_checkpoint(path, checkpoint):
-    temporary = path.with_suffix(".tmp")
+def save_checkpoint(path, checkpoint, *, allow_fallback=False):
+    """Save without exposing a partially written checkpoint.
+
+    Windows can briefly deny replacement while another process scans the old
+    checkpoint. Retrying reuses the fully written temporary file. The final
+    runner can keep a uniquely named checkpoint if the old name stays locked.
+    """
+    path = Path(path)
+    nonce = uuid4().hex[:8]
+    temporary = path.with_name(f".{path.name}.{nonce}.tmp")
     torch.save(checkpoint, temporary)
-    temporary.replace(path)
+    delays = (0.25, 0.5, 1.0, 2.0, 4.0, 4.0)
+    for delay in (*delays, None):
+        try:
+            temporary.replace(path)
+            return path
+        except PermissionError:
+            if delay is None:
+                break
+            time.sleep(delay)
+    if not allow_fallback:
+        raise PermissionError(
+            f"Windows could not replace {path}; the complete checkpoint remains at {temporary}"
+        )
+    epoch = checkpoint.get("epoch", "unknown")
+    fallback = path.with_name(f"{path.stem}_epoch{epoch}_{nonce}.pt")
+    try:
+        temporary.replace(fallback)
+    except PermissionError:
+        fallback = temporary
+    print(f"WARNING: could not replace {path}; checkpoint saved at {fallback}", flush=True)
+    return fallback
 
 
 def source_hashes():
@@ -181,7 +211,7 @@ def train(config, resume=None):
     if resume:
         checkpoint = load_checkpoint(resume)
         differences = [key for key, value in config.to_dict().items()
-                       if key != "epochs" and checkpoint["config"][key] != value]
+                       if key != "epochs" and checkpoint["config"].get(key) != value]
         if differences or checkpoint["data_audit"] != audit or checkpoint["source_sha256"] != source_hashes():
             raise ValueError(f"Resume requires unchanged settings, CSVs and model/training code: {differences}")
         run_dir = resolve_path(resume).parent
@@ -197,7 +227,8 @@ def train(config, resume=None):
     else:
         prefix = "SMOKE" if config.smoke else "Baseline"
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        run_dir = resolve_path(config.output_dir) / f"{prefix}_{config.baseline}_seed{config.seed}_{stamp}"
+        default_name = f"{prefix}_{config.baseline}_seed{config.seed}_{stamp}"
+        run_dir = resolve_path(config.output_dir) / (config.run_name or default_name)
         run_dir.mkdir(parents=True, exist_ok=False)
     save_json(run_dir / "config.json", config.to_dict())
     save_json(run_dir / "data_audit.json", audit)

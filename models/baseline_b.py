@@ -1,3 +1,6 @@
+"""Original linear fusion model kept for existing checkpoint compatibility.
+New nonlinear experiments use RegularizedBaseline in regularized_baselines.py.
+"""
 
 
 import torch

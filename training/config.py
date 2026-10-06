@@ -21,6 +21,7 @@ class TrainConfig:
     data_root: str = ""
     split_dir: str = "."
     output_dir: str = "results/training"
+    run_name: Optional[str] = None
     seed: int = 42
     epochs: int = 10
     batch_size: int = 32
@@ -46,6 +47,8 @@ class TrainConfig:
             value = getattr(self, name)
             if not math.isfinite(value) or value < 0 or (name != "weight_decay" and value == 0):
                 raise ValueError(f"Invalid {name}")
+        if self.run_name is not None and (not isinstance(self.run_name, str) or not self.run_name or self.run_name in {".", ".."} or Path(self.run_name).name != self.run_name):
+            raise ValueError("run_name must be a single directory name")
         if self.num_workers != 0:
             raise ValueError("Keep num_workers=0: M1's unchanged Lambda transform is not spawn-picklable")
         if self.baseline == "B":

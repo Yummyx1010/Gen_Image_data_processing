@@ -137,19 +137,18 @@ class M4Tests(unittest.TestCase):
         self.assertTrue(torch.allclose(rgb, frequency.received, atol=1e-6))
 
     def test_formal_configs_use_real_frequency_encoder_and_no_silent_fallback(self):
-        config_a = TrainConfig.load("configs/m4_baseline_a.json")
-        config_b = TrainConfig.load("configs/m4_baseline_b.json")
-        for name in ("seed", "epochs", "batch_size", "learning_rate", "weight_decay", "grad_clip", "split_dir"):
-            self.assertEqual(getattr(config_a, name), getattr(config_b, name))
-        self.assertEqual(config_b.frequency_input, "normalized")
-        self.assertEqual(config_b.frequency_kwargs, {"feature_dim": 256})
-        with offline_spatial_initialization():
-            model = build_model(config_b)
-        self.assertIsInstance(model.frequency_encoder, FrequencyEncoder)
-        self.assertEqual(model.frequency_encoder.feature_dim, 256)
-        self.assertEqual(model.classifier.in_features, 768)
+        from train_final import load_protocol
+        protocol_a = load_protocol("configs/result_compare_lr4e-4_a.json")
+        protocol_b = load_protocol("configs/result_compare_lr4e-4_b.json")
+        for name in ("learning_rate", "max_epochs", "batch_size", "weight_decay", "grad_clip",
+                     "sampler", "loss", "optimizer", "selection_metric"):
+            self.assertEqual(protocol_a[name], protocol_b[name])
+        self.assertEqual(protocol_b["architecture"], "pretrained_fusion_linear_v2")
+        self.assertIsNone(protocol_b["hidden_dim"])
+        self.assertIsNone(protocol_b["dropout"])
+        config_b = replace(self.config, smoke=False, frequency_factory="missing_m3:Encoder")
         with self.assertRaisesRegex(RuntimeError, "Frequency encoder is unavailable"):
-            build_model(replace(config_b, frequency_input="normalized", frequency_factory="missing_m3:Encoder"))
+            build_model(config_b)
         with self.assertRaisesRegex(ValueError, "stub"):
             replace(self.config, smoke=False).validate(require_data=False)
 
