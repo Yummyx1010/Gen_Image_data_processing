@@ -1,0 +1,27 @@
+{
+  "device": "cuda",
+  "torch": "2.5.1+cu121",
+  "torch_cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "gpu_total_memory_gb": 6.0,
+  "source_sha256": {
+    "dataset.py": "aba33fd839b557c2fc4968ead6e21a5a660c0d111a9d4ffca9932a6fbfe8bce8",
+    "models/baseline_a.py": "c1867e91fd65800d2c52ebe67fb1c00c08ee725a30edabc654b735580b3a02ce",
+    "models/baseline_a_adapter.py": "e0adf1cb158dd844c442c9a88583f13ae8968f7dfc51cd48617e6165563566bf",
+    "models/baseline_b.py": "188f6d6c12dbf679c5276df7e15ee8de9de423ef66553b49b71711f7038967d8",
+    "models/frequency_encoder.py": "05bb99b01f9a54abde51f4fee343100a144bb5cbe5597dd0d0deb8983645b711",
+    "models/frequency_encoder_pretrained.py": "97897df1eaf121d99dcf3d4d27011005fb5154ad4d16bf9703baaebdee3d96f2",
+    "models/frequency_encoder_v2.py": "ea24f518f21c167121acbb1b1ddc91593894189ded567331c00537bbbd35c102",
+    "models/frequency_only.py": "922c1db8fd7e32b6fc0a255754260c57c032a38fc46d8bc9ccb7f7f51d12bd23",
+    "models/pretrained_baseline_b.py": "57a6bef7f0602905bf82226b1c4dae6f9361112164affbd36b135fdf6b58036a",
+    "models/regularized_baselines.py": "48ac15b99cb6e849943e006bdf22e7883fd4f14cc0c53c426b0b5d484f2cfc5a",
+    "models/regularized_baselines_v1.py": "072c36e950b9db675d11012c6f3bef996ed8f15d193162dcd5ebab1b00bab595",
+    "models/spatial_encoder.py": "ab2bd686f27f5f4e22af4c572b704956e0432e784220324f5508153414049f66",
+    "training/augment.py": "9a5f4ae53cefb3419b50a91fd75dbaf1ea5b12426d3baa975e9b706dc6657e7b",
+    "training/config.py": "fc99327686676b80009eec47eab12a3a312b7449861540e128ea2a0e0488c5eb",
+    "training/data.py": "059d3dc155ebd104ec7106d4db31ffe4f6c4ad23175d16b82c033122c28564a8",
+    "training/smoke.py": "a2765629c573b6c5b57e916ef81cf36c3ba8a135091a2d4b86a5f67ac79e539c",
+    "training/train.py": "0e3b1d35495840d6e5b62218b9012f559b9cd7d5c709d93a65eadec8706196b3",
+    "train_final.py": "adf7ae543bf60e3d9692f492052016b4a687ce61c559e4bd266bd135cb5ed603"
+  }
+}
