@@ -1,0 +1,30 @@
+{
+  "phase": "result_compare_lr4e-4_seed123",
+  "architecture": "frequency_cnn_concat_v1",
+  "model_description": "Baseline B: frozen pretrained spatial ResNet-18 plus the original lightweight frequency CNN, concatenated to 768 features and classified by Linear(768, 1)",
+  "model_source": [
+    "models/spatial_encoder.py",
+    "models/frequency_encoder.py",
+    "models/baseline_b.py"
+  ],
+  "learning_rate_candidates": [
+    0.0004
+  ],
+  "learning_rate": 0.0004,
+  "max_epochs": 30,
+  "early_stopping_enabled": true,
+  "early_stopping_warmup_epochs": 10,
+  "early_stopping_patience": 5,
+  "early_stopping_min_delta": 0.0,
+  "batch_size": 32,
+  "sampler": "WeightedRandomSampler",
+  "loss": "BCEWithLogitsLoss",
+  "optimizer": "Adam",
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "selection_metric": "validation_auroc",
+  "hidden_dim": null,
+  "dropout": null,
+  "device": "cuda",
+  "output_dir": "results/result_compare"
+}
