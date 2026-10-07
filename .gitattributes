@@ -1,3 +1,9 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and perform LF normalization by default.
 * text=auto
+# Checkpoints record SHA-256 of the exact training source bytes. Preserve them
+# in Git and on checkout, regardless of core.autocrlf or OS.
+/dataset.py -text
+/train_final.py -text
+/models/** -text
+/training/** -text
 *.pt filter=lfs diff=lfs merge=lfs -text

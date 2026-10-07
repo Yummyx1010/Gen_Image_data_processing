@@ -1,0 +1,19 @@
+{
+  "baseline": "A",
+  "data_root": "F:\\AAA-nz-auckland-homework\\760\\Group 12-Milestone 1\\archive",
+  "split_dir": ".",
+  "output_dir": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing\\results\\result_compare\\lr_9e-4",
+  "run_name": "m2_baseline_a_seed2026_20261007_173817_241008",
+  "seed": 2026,
+  "epochs": 30,
+  "batch_size": 32,
+  "learning_rate": 0.0009,
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "num_workers": 0,
+  "device": "cuda",
+  "frequency_factory": "not_applicable",
+  "frequency_kwargs": {},
+  "frequency_input": null,
+  "smoke": false
+}
