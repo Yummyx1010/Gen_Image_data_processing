@@ -1,11 +1,17 @@
 {
-  "phase": "result_compare_lr3e-3_seed123",
+  "phase": "result_compare_lr9e-4_seed123",
   "architecture": "m3_frequency_concat_v1",
   "model_description": "Baseline B: frozen spatial ResNet-18 plus M3's trainable ImageNet-initialized frequency ResNet-18 encoder; concatenate 512+256 features and train Linear(768, 1)",
-  "model_source": ["models/spatial_encoder.py", "models/frequency_encoder_pretrained.py", "models/baseline_b.py"],
+  "model_source": [
+    "models/spatial_encoder.py",
+    "models/frequency_encoder_pretrained.py",
+    "models/baseline_b.py"
+  ],
   "freeze_frequency_backbone": false,
-  "learning_rate_candidates": [0.003],
-  "learning_rate": 0.003,
+  "learning_rate_candidates": [
+    0.0009
+  ],
+  "learning_rate": 0.0009,
   "max_epochs": 30,
   "early_stopping_enabled": true,
   "early_stopping_warmup_epochs": 10,

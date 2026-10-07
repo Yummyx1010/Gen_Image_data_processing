@@ -1,4 +1,4 @@
-"""Baseline B with the original frequency encoder and 768-D linear fusion."""
+"""Baseline B with frozen spatial features and trainable frequency features."""
 
 
 import torch
@@ -9,9 +9,9 @@ from models.spatial_encoder import SpatialEncoder
 class BaselineB(nn.Module):
     """512 + 256 -> Linear(768, 1), matching M2's single-linear-layer head.
 
-    frequency_encoder must include the agreed FFT/log-spectrum preprocessing
-    and produce [B,256]. Its parameters must remain connected to autograd.
-    A shared spatial encoder may be injected; otherwise instantiate M2's class.
+    frequency_encoder must include FFT/log-spectrum preprocessing, produce
+    [B,256], and remain connected to autograd. A shared spatial encoder may
+    be injected for controlled tests.
     """
 
     def __init__(self, frequency_encoder, frequency_input, spatial_encoder=None):

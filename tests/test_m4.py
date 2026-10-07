@@ -16,7 +16,7 @@ from torch import nn
 from models.baseline_b import BaselineB
 from models.baseline_a_adapter import FrozenBaselineA
 from models.frequency_encoder import FrequencyEncoder
-from training.config import TrainConfig
+from training.config import ROOT, TrainConfig
 from training.data import inspect_splits, make_loader
 from training.smoke import FrequencyStub, offline_spatial_initialization
 from training.train import (PREDICTION_FIELDS, build_model, export_predictions,
@@ -138,18 +138,25 @@ class M4Tests(unittest.TestCase):
 
     def test_formal_configs_use_real_frequency_encoder_and_no_silent_fallback(self):
         from train_final import load_protocol
-        protocol_a = load_protocol("configs/result_compare_lr4e-4_a.json")
-        protocol_b = load_protocol("configs/result_compare_lr4e-4_b.json")
-        for name in ("learning_rate", "max_epochs", "batch_size", "weight_decay", "grad_clip",
-                     "sampler", "loss", "optimizer", "selection_metric"):
-            self.assertEqual(protocol_a[name], protocol_b[name])
-        self.assertEqual(protocol_b["architecture"], "frequency_cnn_concat_v1")
-        self.assertEqual(protocol_b["model_source"], [
-            "models/spatial_encoder.py", "models/frequency_encoder.py", "models/baseline_b.py"
-        ])
-        self.assertNotIn("freeze_frequency_backbone", protocol_b)
-        self.assertIsNone(protocol_b["hidden_dim"])
-        self.assertIsNone(protocol_b["dropout"])
+        for path in (ROOT / "configs").glob("result_compare*_b.json"):
+            with self.subTest(protocol=path.name):
+                protocol_b = load_protocol(path)
+                paired_a = path.with_name(path.name.replace("_b.json", "_a.json"))
+                paired_f = path.with_name(path.name.replace("_b.json", "_frequency.json"))
+                for paired in (paired_a, paired_f):
+                    self.assertTrue(paired.exists(), f"Missing paired protocol: {paired}")
+                    other = load_protocol(paired)
+                    for name in ("learning_rate", "max_epochs", "batch_size", "weight_decay",
+                                 "grad_clip", "sampler", "loss", "optimizer", "selection_metric"):
+                        self.assertEqual(other[name], protocol_b[name])
+                self.assertEqual(protocol_b["architecture"], "m3_frequency_concat_v1")
+                self.assertEqual(protocol_b["model_source"], [
+                    "models/spatial_encoder.py", "models/frequency_encoder_pretrained.py", "models/baseline_b.py"
+                ])
+                self.assertIs(protocol_b["freeze_frequency_backbone"], False)
+                self.assertNotIn("frequency_checkpoint", protocol_b)
+                self.assertIsNone(protocol_b["hidden_dim"])
+                self.assertIsNone(protocol_b["dropout"])
         config_b = replace(self.config, smoke=False, frequency_factory="missing_m3:Encoder")
         with self.assertRaisesRegex(RuntimeError, "Frequency encoder is unavailable"):
             build_model(config_b)

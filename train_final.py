@@ -19,6 +19,7 @@ from torch.utils.data import DataLoader, WeightedRandomSampler
 from models.baseline_a_adapter import FrozenBaselineA
 from models.baseline_b import BaselineB
 from models.frequency_encoder import FrequencyEncoder
+from models.frequency_encoder_pretrained import PretrainedFrequencyEncoder
 from models.frequency_only import FrequencyOnlyModel
 from models.pretrained_baseline_b import LegacyPretrainedBaselineB, PretrainedBaselineB
 from training.config import ROOT, TrainConfig, resolve_path
@@ -29,9 +30,10 @@ from training.train import (
 )
 
 MODEL_NAMES = ("m2_baseline_a", "pretrained_frequency_only", "baseline_b", "pretrained_baseline_b")
+CURRENT_B_ARCHITECTURE = "m3_frequency_concat_v1"
 ARCHITECTURES = {
     "m2_linear_v1", "pretrained_frequency_only_v1", "frequency_cnn_concat_v1",
-    "pretrained_fusion_v1", "pretrained_fusion_linear_v2",
+    "pretrained_fusion_v1", "pretrained_fusion_linear_v2", CURRENT_B_ARCHITECTURE,
 }
 
 
@@ -61,8 +63,13 @@ def load_protocol(path):
     if protocol["architecture"].startswith("pretrained_"):
         if type(protocol["freeze_frequency_backbone"]) is not bool:
             raise ValueError("freeze_frequency_backbone must be a boolean")
+    elif protocol["architecture"] == CURRENT_B_ARCHITECTURE:
+        if protocol.get("freeze_frequency_backbone") is not False:
+            raise ValueError("Current Baseline B must train the ImageNet-initialized frequency backbone")
     elif protocol["architecture"] == "frequency_cnn_concat_v1" and "freeze_frequency_backbone" in protocol:
         raise ValueError("The lightweight frequency CNN has no pretrained backbone to freeze")
+    if "frequency_checkpoint" in protocol or "freeze_frequency_encoder" in protocol:
+        raise ValueError("Training does not load or freeze an F checkpoint")
     if type(protocol["early_stopping_enabled"]) is not bool:
         raise ValueError("early_stopping_enabled must be a boolean")
     if protocol["early_stopping_enabled"]:
@@ -187,6 +194,13 @@ def load_regularized_checkpoint(path, device="cpu"):
         if checkpoint["model_name"] != "baseline_b":
             raise ValueError("Checkpoint model and architecture do not match")
         model = BaselineB(FrequencyEncoder(feature_dim=256), "normalized")
+    elif architecture == CURRENT_B_ARCHITECTURE:
+        if checkpoint["model_name"] != "baseline_b":
+            raise ValueError("Checkpoint model and architecture do not match")
+        model = BaselineB(
+            PretrainedFrequencyEncoder(feature_dim=256, freeze_backbone=False),
+            "normalized",
+        )
     else:
         raise ValueError("Unsupported training checkpoint")
     model.load_state_dict(checkpoint["model_state_dict"])
@@ -200,24 +214,26 @@ def train_final(model_name, seed, data_root, protocol):
     architecture_for_model = {
         "m2_baseline_a": "m2_linear_v1",
         "pretrained_frequency_only": "pretrained_frequency_only_v1",
-        "baseline_b": "frequency_cnn_concat_v1",
+        "baseline_b": CURRENT_B_ARCHITECTURE,
         "pretrained_baseline_b": {"pretrained_fusion_v1", "pretrained_fusion_linear_v2"},
     }
     expected_architecture = architecture_for_model[model_name]
     if isinstance(expected_architecture, str):
         expected_architecture = {expected_architecture}
     if protocol["architecture"] not in expected_architecture:
+        if model_name == "baseline_b" and protocol["architecture"] == "frequency_cnn_concat_v1":
+            raise ValueError("The CNN Baseline B is legacy; use an M3 frequency protocol")
         raise ValueError("Model and protocol architecture must match")
-    uses_pretrained_frequency = model_name in {"pretrained_frequency_only", "pretrained_baseline_b"}
+    current_b = model_name == "baseline_b"
+    uses_pretrained_frequency = model_name in {"pretrained_frequency_only", "pretrained_baseline_b", "baseline_b"}
     frequency_factory = {
         "m2_baseline_a": "not_applicable",
-        "baseline_b": "models.frequency_encoder:FrequencyEncoder",
+        "baseline_b": "models.frequency_encoder_pretrained:PretrainedFrequencyEncoder",
         "pretrained_frequency_only": "models.frequency_encoder_pretrained:PretrainedFrequencyEncoder",
         "pretrained_baseline_b": "models.frequency_encoder_pretrained:PretrainedFrequencyEncoder",
     }[model_name]
     frequency_kwargs = (
         {} if model_name == "m2_baseline_a" else
-        {"feature_dim": 256} if model_name == "baseline_b" else
         {"feature_dim": 256, "freeze_backbone": protocol["freeze_frequency_backbone"]}
     )
     config = TrainConfig(
@@ -243,7 +259,10 @@ def train_final(model_name, seed, data_root, protocol):
             feature_dim=256, freeze_backbone=protocol["freeze_frequency_backbone"]
         ).to(device)
     elif model_name == "baseline_b":
-        model = BaselineB(FrequencyEncoder(feature_dim=256), "normalized").to(device)
+        model = BaselineB(
+            PretrainedFrequencyEncoder(feature_dim=256, freeze_backbone=False),
+            "normalized",
+        ).to(device)
     elif model_name == "pretrained_baseline_b":
         if protocol["architecture"] == "pretrained_fusion_v1":
             model = LegacyPretrainedBaselineB(
@@ -262,6 +281,8 @@ def train_final(model_name, seed, data_root, protocol):
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     run_label = (f"{model_name}_linear_v2"
                  if protocol["architecture"] == "pretrained_fusion_linear_v2"
+                 else f"{model_name}_m3_concat_v1"
+                 if current_b
                  else f"{model_name}_cnn_concat_v1"
                  if protocol["architecture"] == "frequency_cnn_concat_v1"
                  else model_name)
@@ -275,12 +296,10 @@ def train_final(model_name, seed, data_root, protocol):
     hashes["train_final.py"] = hashlib.sha256((ROOT / "train_final.py").read_bytes()).hexdigest()
     if uses_pretrained_frequency:
         sources = ["models/frequency_encoder_pretrained.py"]
-        sources.append("models/frequency_only.py" if model_name == "pretrained_frequency_only"
-                       else "models/pretrained_baseline_b.py")
+        sources.append("models/baseline_b.py" if current_b else
+                       "models/frequency_only.py" if model_name == "pretrained_frequency_only" else
+                       "models/pretrained_baseline_b.py")
         for source in sources:
-            hashes[source] = hashlib.sha256((ROOT / source).read_bytes()).hexdigest()
-    elif model_name == "baseline_b":
-        for source in ("models/frequency_encoder.py", "models/baseline_b.py"):
             hashes[source] = hashlib.sha256((ROOT / source).read_bytes()).hexdigest()
     hardware = {
         "device": str(device), "torch": str(torch.__version__),
