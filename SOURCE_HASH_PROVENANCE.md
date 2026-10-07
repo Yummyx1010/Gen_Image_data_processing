@@ -9,7 +9,8 @@ different despite identical Python code.
 `.gitattributes` now disables line-ending conversion for the training source:
 `dataset.py`, `train_final.py`, and everything under `models/` and
 `training/`. The existing source files are re-added to Git with their original
-bytes. Historical checkpoints and model weights are not rewritten.
+bytes. This source-byte fix did not change any model tensors. One later
+checkpoint metadata correction is documented below.
 
 To guard future training runs, execute:
 
@@ -23,7 +24,10 @@ source version; a later change to model or training code is expected to have
 different hashes and must not be compared with an older checkpoint as if it
 were the same version.
 
-The seed-2026 protocols at learning rate 0.0009 have separate config files.
-The already completed seed-2026 B run used a seed-123 *phase label* but
-`config.seed=2026`; its correction is documented alongside that run without
-changing its checkpoints.
+The seed-2026 and seed-42 protocols at learning rate 0.0009 have separate
+config files. The completed seed-2026 B run was trained with `config.seed=2026`
+but originally carried a seed-123 *phase label*. Its `protocol.json` and the
+embedded protocol metadata in `best.pt` and `last.pt` were corrected to
+seed-2026. The checkpoint model tensors, optimizer state, and source hashes
+were verified unchanged. `provenance_correction.json` beside that run records
+the original and corrected checkpoint file hashes.

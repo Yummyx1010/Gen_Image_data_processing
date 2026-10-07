@@ -1,0 +1,46 @@
+{
+  "model": "baseline_b",
+  "architecture": "m3_frequency_concat_v1",
+  "seed": 42,
+  "learning_rate": 0.0009,
+  "frequency_backbone_learning_rate": null,
+  "weight_decay": 0.0001,
+  "dropout": null,
+  "hidden_dim": null,
+  "batch_size": 32,
+  "maximum_epochs": 30,
+  "early_stopping_enabled": true,
+  "early_stopping_warmup_epochs": 10,
+  "early_stopping_patience": 5,
+  "epochs_completed": 19,
+  "best_epoch": 14,
+  "best_validation_loss": 0.2583739000041824,
+  "best_validation_AUROC": 0.9667224699828474,
+  "best_validation_metrics_at_best_loss": {
+    "accuracy": 0.8990725586470267,
+    "precision": 0.9598445595854922,
+    "recall": 0.8892,
+    "auroc": 0.9630219554030874
+  },
+  "best_validation_metrics_at_best_auroc": {
+    "accuracy": 0.8226950354609929,
+    "precision": 0.982776617954071,
+    "recall": 0.7532,
+    "auroc": 0.9667224699828474
+  },
+  "selection_metric": "validation_auroc",
+  "selected_checkpoint_validation_loss": 0.44382516804836647,
+  "selected_checkpoint_validation_AUROC": 0.9667224699828474,
+  "training_seconds": 1723.2689447000012,
+  "hardware": {
+    "device": "cuda",
+    "torch": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_total_memory_gb": 6.0
+  },
+  "checkpoint_path": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing\\results\\result_compare\\lr_9e-4\\baseline_b_m3_concat_v1_seed42_20261007_190418_087044\\best.pt",
+  "last_checkpoint_path": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing\\results\\result_compare\\lr_9e-4\\baseline_b_m3_concat_v1_seed42_20261007_190418_087044\\last.pt",
+  "stop_reason": "early_stopping",
+  "sampling": "balanced training only; official validation distribution"
+}
