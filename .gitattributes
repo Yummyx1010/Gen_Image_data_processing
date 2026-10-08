@@ -7,5 +7,3 @@
 /models/** -text
 /training/** -text
 *.pt filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.JPEG filter=lfs diff=lfs merge=lfs -text
