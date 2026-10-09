@@ -1,0 +1,95 @@
+{
+  "commit": "58f1717aeb50da25c8db7bbebe5bbd7c38a9e266",
+  "models": [
+    {
+      "model": "A",
+      "seed": 42,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/A/seed_42/best.pt",
+      "bytes": 44803034,
+      "sha256": "cdc44be53fb59463718bedca0fa64d72169358ed2ee1e4dd8e6f37c82b1a1e26",
+      "original_repository_path": "results/result_compare/lr_9e-4/m2_baseline_a_seed42_20261007_181634_733139/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "A",
+      "seed": 123,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/A/seed_123/best.pt",
+      "bytes": 44803034,
+      "sha256": "5316a66b0c17f1f5fed4ed1c659ee0af42f89ced5b61cbdb9c2acfc0508ff024",
+      "original_repository_path": "results/result_compare/lr_9e-4/m2_baseline_a_seed123_20261007_151346_371419/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "A",
+      "seed": 2026,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/A/seed_2026/best.pt",
+      "bytes": 44802714,
+      "sha256": "4c37da4ac4b7567524ac3a6c94e3d810e4e5c1397de6464d40bed8380a60aaeb",
+      "original_repository_path": "results/result_compare/lr_9e-4/m2_baseline_a_seed2026_20261007_173817_241008/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "B",
+      "seed": 42,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B/seed_42/best.pt",
+      "bytes": 180643530,
+      "sha256": "863674f128f045cd488e58bb0193a54fd10dca10c3ddc11123fcd7ee6147cfa9",
+      "original_repository_path": "results/result_compare/lr_9e-4/baseline_b_m3_concat_v1_seed42_20261007_190418_087044/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "B",
+      "seed": 123,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B/seed_123/best.pt",
+      "bytes": 180642890,
+      "sha256": "6039a7de941b4b26877f73360a0101f1c7e9c7c1a1f394dd8bdbcde740cf3eab",
+      "original_repository_path": "results/result_compare/lr_9e-4/baseline_b_m3_concat_v1_seed123_20261007_144720_069120/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "B",
+      "seed": 2026,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B/seed_2026/best.pt",
+      "bytes": 180646138,
+      "sha256": "b900fbedcf1184a007d7c8bf89979b871bcf814ee6a84bb9e26aed32edaf23f6",
+      "original_repository_path": "results/result_compare/lr_9e-4/baseline_b_m3_concat_v1_seed2026_20261007_164308_482104/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "F",
+      "seed": 42,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/F/seed_42/best.pt",
+      "bytes": 135844618,
+      "sha256": "c09090293de3eba3c3efafd5e0e0aa7ebb198444b3a10b044c328bb99b1c8e45",
+      "original_repository_path": "results/result_compare/lr_9e-4/pretrained_frequency_only_seed42_20261007_184438_867761/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "F",
+      "seed": 123,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/F/seed_123/best.pt",
+      "bytes": 135845962,
+      "sha256": "a76c4cc26cb2fb8b84784ce8295a822a0227aaeb425f4a9739c3b6fbf6f85756",
+      "original_repository_path": "results/result_compare/lr_9e-4/pretrained_frequency_only_seed123_20261007_152836_800490/best.pt",
+      "verified_after_copy": true
+    },
+    {
+      "model": "F",
+      "seed": 2026,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/F/seed_2026/best.pt",
+      "bytes": 135844618,
+      "sha256": "8cb58b87c7b24be2b217955525a05516be0a90c6f427c496d7f079b604c71947",
+      "original_repository_path": "results/result_compare/lr_9e-4/pretrained_frequency_only_seed2026_20261007_175324_044840/best.pt",
+      "verified_after_copy": true
+    }
+  ]
+}

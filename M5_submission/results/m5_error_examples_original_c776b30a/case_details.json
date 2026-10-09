@@ -1,0 +1,483 @@
+{
+  "status": "six_examples_visually_reviewed",
+  "scope": "original_full_test_all_nine_checkpoints",
+  "created_at": "2026-10-09T08:58:22.754810+13:00",
+  "threshold": 0.5,
+  "seeds": [
+    42,
+    123,
+    2026
+  ],
+  "selection_rule": "Two cases per error pattern; identical A/B pattern in all three seeds; prefer least-covered source, then fixed source order glide/Midjourney/wukong/Nature, then filename order.",
+  "purpose": "Qualitative illustration only, not a replacement test set or a prevalence estimate.",
+  "cases": [
+    {
+      "case_number": 1,
+      "sample_id": "glide/GLIDE_1000_200_01_109_glide_00035.jpg",
+      "generator": "glide",
+      "true_label": 1,
+      "true_class": "AI-generated image",
+      "pattern_all_three_seeds": "A_correct_B_wrong",
+      "pattern_title": "A correct, B wrong",
+      "image_path": "data/glide/GLIDE_1000_200_01_109_glide_00035.jpg",
+      "image_sha256": "e3df22db409e4e09202a49ed80997b90c464ad552c2b14a3bf7ea896da45bfcd",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 3,
+        "F": 0,
+        "B": 0
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.6442386507987976,
+            "pred_label": 1,
+            "correct": true
+          },
+          "123": {
+            "probability_ai": 0.6373902559280396,
+            "pred_label": 1,
+            "correct": true
+          },
+          "2026": {
+            "probability_ai": 0.543481171131134,
+            "pred_label": 1,
+            "correct": true
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.11854571849107742,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.09719093888998032,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.19621214270591736,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.0062770782969892025,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.16712871193885803,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.21862131357192993,
+            "pred_label": 0,
+            "correct": false
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        256,
+        256
+      ],
+      "display_description_en": "Coral-like textured close-up",
+      "visual_observation_en": "Coral-like structures appear against a blue-green background, with dense curved textures in orange-yellow areas.",
+      "prediction_observation_en": "A is correct in all three seeds; F and B classify this AI image as real in all three."
+    },
+    {
+      "case_number": 2,
+      "sample_id": "Midjourney/112_midjourney_23.jpg",
+      "generator": "Midjourney",
+      "true_label": 1,
+      "true_class": "AI-generated image",
+      "pattern_all_three_seeds": "A_correct_B_wrong",
+      "pattern_title": "A correct, B wrong",
+      "image_path": "data/Midjourney/112_midjourney_23.jpg",
+      "image_sha256": "93236852057b2154692730d9069085aac1c7d0511d3134bf6d8447f65292424a",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 3,
+        "F": 0,
+        "B": 0
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.5096266865730286,
+            "pred_label": 1,
+            "correct": true
+          },
+          "123": {
+            "probability_ai": 0.6119793057441711,
+            "pred_label": 1,
+            "correct": true
+          },
+          "2026": {
+            "probability_ai": 0.6125068068504333,
+            "pred_label": 1,
+            "correct": true
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.14061619341373444,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.03707108274102211,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.12903480231761932,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.11620654910802841,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.3232189118862152,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.2885145843029022,
+            "pred_label": 0,
+            "correct": false
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        1024,
+        1024
+      ],
+      "display_description_en": "Seashell on a sandy beach",
+      "visual_observation_en": "A close-up of a seashell on sand. The foreground is relatively sharp, while the sea and sky are blurred.",
+      "prediction_observation_en": "A is correct in all three seeds; F and B classify this AI image as real in all three."
+    },
+    {
+      "case_number": 3,
+      "sample_id": "wukong/10_wukong_image72.jpg",
+      "generator": "wukong",
+      "true_label": 1,
+      "true_class": "AI-generated image",
+      "pattern_all_three_seeds": "A_wrong_B_correct",
+      "pattern_title": "A wrong, B correct",
+      "image_path": "data/wukong/10_wukong_image72.jpg",
+      "image_sha256": "4ed5cc92a4ea298fc8c6dd0cd6349c48c8c56c8d3d2ae7b3fd776eeb41cf825a",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 0,
+        "F": 0,
+        "B": 3
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.35251471400260925,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.2764527499675751,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.3088442087173462,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.057771433144807816,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.1253247857093811,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.2610737085342407,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.6107621788978577,
+            "pred_label": 1,
+            "correct": true
+          },
+          "123": {
+            "probability_ai": 0.7394697666168213,
+            "pred_label": 1,
+            "correct": true
+          },
+          "2026": {
+            "probability_ai": 0.5217239856719971,
+            "pred_label": 1,
+            "correct": true
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        512,
+        512
+      ],
+      "display_description_en": "Two birds on a branch",
+      "visual_observation_en": "Two brightly coloured birds perch on a branch against a mostly blurred green background.",
+      "prediction_observation_en": "B detects this AI image in all three seeds, while A and F classify it as real."
+    },
+    {
+      "case_number": 4,
+      "sample_id": "Nature/ILSVRC2012_val_00004645.JPEG",
+      "generator": "Nature",
+      "true_label": 0,
+      "true_class": "Real image",
+      "pattern_all_three_seeds": "A_wrong_B_correct",
+      "pattern_title": "A wrong, B correct",
+      "image_path": "data/Nature/ILSVRC2012_val_00004645.JPEG",
+      "image_sha256": "2a0a34b1bc69822e5a83448f82f81fe913f49ffb715cc7ae11acf35aed1fdb24",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 0,
+        "F": 2,
+        "B": 3
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.5821760296821594,
+            "pred_label": 1,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.5876248478889465,
+            "pred_label": 1,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.6064579486846924,
+            "pred_label": 1,
+            "correct": false
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.5134519338607788,
+            "pred_label": 1,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.07545161247253418,
+            "pred_label": 0,
+            "correct": true
+          },
+          "2026": {
+            "probability_ai": 0.1118801161646843,
+            "pred_label": 0,
+            "correct": true
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.022036805748939514,
+            "pred_label": 0,
+            "correct": true
+          },
+          "123": {
+            "probability_ai": 0.48792821168899536,
+            "pred_label": 0,
+            "correct": true
+          },
+          "2026": {
+            "probability_ai": 0.3738633394241333,
+            "pred_label": 0,
+            "correct": true
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        463,
+        500
+      ],
+      "display_description_en": "A bed with white curtains",
+      "visual_observation_en": "White curtains surround a wooden bed. The area behind the bed is brightly lit and the foreground is darker.",
+      "prediction_observation_en": "B correctly classifies this real image in all three seeds; A predicts AI in all three. F is correct in two seeds."
+    },
+    {
+      "case_number": 5,
+      "sample_id": "glide/GLIDE_1000_200_00_013_glide_00106.jpg",
+      "generator": "glide",
+      "true_label": 1,
+      "true_class": "AI-generated image",
+      "pattern_all_three_seeds": "both_wrong",
+      "pattern_title": "A and B wrong",
+      "image_path": "data/glide/GLIDE_1000_200_00_013_glide_00106.jpg",
+      "image_sha256": "42bfc079021914ffe38386cec1137674e0b7d117c7e42b8cfc6dd4b6872ac1cb",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 0,
+        "F": 2,
+        "B": 0
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.13566388189792633,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.033531252294778824,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.08991910517215729,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.7729462385177612,
+            "pred_label": 1,
+            "correct": true
+          },
+          "123": {
+            "probability_ai": 0.2034042924642563,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.7681877017021179,
+            "pred_label": 1,
+            "correct": true
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.012418228201568127,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.19812892377376556,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.041783787310123444,
+            "pred_label": 0,
+            "correct": false
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        256,
+        256
+      ],
+      "display_description_en": "A bird among bare branches",
+      "visual_observation_en": "A small grey-white bird perches among thin branches. The background has bright areas and the image is generally blurred.",
+      "prediction_observation_en": "A and B miss this AI image in all three seeds. F detects it in two of the three seeds."
+    },
+    {
+      "case_number": 6,
+      "sample_id": "Midjourney/0_midjourney_161.jpg",
+      "generator": "Midjourney",
+      "true_label": 1,
+      "true_class": "AI-generated image",
+      "pattern_all_three_seeds": "both_wrong",
+      "pattern_title": "A and B wrong",
+      "image_path": "data/Midjourney/0_midjourney_161.jpg",
+      "image_sha256": "2eed6105547efa7998324baf521394d5cc8763ff13ca981026b0d8e0e0fb5b3f",
+      "visually_reviewed": true,
+      "correct_seeds": {
+        "A": 0,
+        "F": 0,
+        "B": 0
+      },
+      "predictions": {
+        "A": {
+          "42": {
+            "probability_ai": 0.11847266554832458,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.055472951382398605,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.10375328361988068,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "F": {
+          "42": {
+            "probability_ai": 0.2794438302516937,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.1323760449886322,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.28093716502189636,
+            "pred_label": 0,
+            "correct": false
+          }
+        },
+        "B": {
+          "42": {
+            "probability_ai": 0.017382683232426643,
+            "pred_label": 0,
+            "correct": false
+          },
+          "123": {
+            "probability_ai": 0.08680537343025208,
+            "pred_label": 0,
+            "correct": false
+          },
+          "2026": {
+            "probability_ai": 0.21688112616539001,
+            "pred_label": 0,
+            "correct": false
+          }
+        }
+      },
+      "visual_review_method": "visual inspection of the original local image",
+      "original_pixel_size": [
+        1024,
+        1024
+      ],
+      "display_description_en": "Close-up of a yellow fish",
+      "visual_observation_en": "A close-up of a yellow fish head with a clearly visible eye and mouth against a blurred dark-green background.",
+      "prediction_observation_en": "All three models classify this AI image as real in all three seeds."
+    }
+  ]
+}
