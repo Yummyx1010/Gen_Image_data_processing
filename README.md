@@ -1,287 +1,57 @@
-# Member 1: Data & Experimental Protocol Report
+# M5 Evaluation and Analysis
 
-## 1. 数据集选择（Dataset Selection）
+The original A, F and B models were evaluated with seeds 42, 123 and 2026. All nine checkpoints use training learning rate 0.0009. Each predicts the complete 8,666-image test set, producing 77,994 records.
 
-### 1.1 数据集选择原因
+## Start here
 
-本项目最初计划使用 Tiny-GenImage 数据集进行 AI 生成图像检测实验。然而，在进一步分析后发现，原始数据集可能存在潜在的数据偏差，例如：
+- [Results and conclusion](logs/M5_metrics_summary.md)
+- [Excel comparison](results/m5_scores_20261008_184008_9498f1/M5_results_comparison.xlsx)
+- [Figure descriptions](results/m5_figures_original_20261008_232856_d8c2bd/FIGURES.md)
+- [Error analysis](results/m5_error_examples_original_c776b30a/ERROR_ANALYSIS.md)
+- [Case gallery](results/m5_error_examples_original_c776b30a/04_error_examples.png)
 
-- AI-generated images 与 real images 之间可能存在图像格式差异；
-- 不同生成器可能具有明显不同的原始分辨率；
-- 模型可能学习 shortcut features，而不是 AI 生成图像本身的特征。
+## Models and test protocol
 
-由于本研究关注的是 frequency-domain features 是否能够提升 cross-generator generalisation，因此需要尽量减少非目标因素影响。
+| Model | Features | Classification head |
+|---|---|---|
+| A | Frozen spatial ResNet-18 | Linear(512, 1) |
+| F | M3 pretrained frequency encoder | Linear(256, 1) |
+| B | Spatial and frequency features concatenated | Linear(768, 1) |
 
-因此，本项目最终选择使用 **Unbiased Tiny GenImage** 数据集。
+F and B use the same frequency-encoder implementation with separately trained weights.
 
----
+The test set contains 1,166 Nature real images and 2,500 images each from glide, Midjourney and wukong. Real=0 and AI=1. The original run used CPU, batch size 32, no shuffling and threshold 0.5. AUROC uses continuous P(AI).
 
-## 2. Dataset Structure Inspection
+## Contents
 
-Unbiased Tiny GenImage 按 generator/source 组织：
+| Folder | Contents |
+|---|---|
+| m5/ | Evaluation, scoring, plotting and error-analysis code |
+| results/ | Full predictions, metric tables, workbook, figures and analysis |
+| logs/ | Final conclusion and input manifests |
+| code/ | Original test CSV |
+| data/ | Six original images used in the error analysis |
 
-|类别|说明|
-|-|-|
-|ADM|AI-generated image|
-|BigGAN|AI-generated image|
-|glide|AI-generated image|
-|Midjourney|AI-generated image|
-|stable_diffusion_v_1_5|AI-generated image|
-|VQDM|AI-generated image|
-|wukong|AI-generated image|
-|Nature|real image|
+The data folder contains only the six case images. The prediction CSVs and test manifest cover all 8,666 images.
 
-Dataset statistics:
+## Recalculate metrics
 
-|类别|图片数量|格式|
-|-|-:|-|
-|ADM|2500|JPG|
-|BigGAN|2500|JPG|
-|glide|2500|JPG|
-|Midjourney|2500|JPG|
-|stable_diffusion_v_1_5|2500|JPG|
-|VQDM|2500|JPG|
-|wukong|2500|JPG|
-|Nature|5828|JPEG|
+From this folder, with Python 3.10 or later and scikit-learn installed:
 
-Total:
-
-- Fake images: 17500
-- Real images: 5828
-- Total images: 23328
-
----
-
-# 3. Dataset Bias Inspection
-
-## 3.1 Image Format Analysis
-
-通过 PIL 检查图片真实格式。
-
-结果：
-
-- AI-generated images: JPEG
-- Real images: JPEG
-
-因此不存在明显 JPEG/PNG format shortcut bias。
-
----
-
-## 3.2 Resolution Analysis
-
-原始图片分辨率存在 generator-dependent difference：
-
-|Generator|主要分辨率|
-|-|-|
-|ADM|256×256|
-|BigGAN|128×128|
-|glide|256×256|
-|VQDM|256×256|
-|stable_diffusion_v_1_5|512×512|
-|wukong|512×512|
-|Midjourney|1024×1024|
-|Nature|多种分辨率|
-
-因此需要统一 preprocessing。
-
----
-
-# 4. Shared Preprocessing Pipeline
-
-为了保证 Baseline A（Spatial-only）和 Baseline B（Spatial + Frequency）输入一致，所有图片使用相同 preprocessing：
-
-```
-Original Image
-        ↓
-RGB Conversion
-        ↓
-Resize (shorter side = 256)
-        ↓
-Center Crop (224×224)
-        ↓
-Tensor Conversion
-        ↓
-ImageNet Normalization
-        ↓
-Model Input
+```sh
+python -B m5/test_scoring.py
+python -B m5/score_predictions.py --run-dir results/m5_test_20261008_124810_081d31
 ```
 
-最终输入：
+The scoring command creates a new results folder. [SCORING.md](m5/SCORING.md) gives the metric definitions and Excel export command. Workbook export requires XlsxWriter. Plot generation uses base R at the Rscript path in the script. Gallery generation requires Pillow and the specified Arial font paths.
 
-```
-[3,224,224]
-```
+## Repeat image inference
 
-测试 ADM、BigGAN、Nature 图片后，均成功转换为：
+Use the original project workspace with the frozen M4 source code, nine checkpoints and complete image dataset. [model_index.json](logs/model_index.json) records checkpoint paths and hashes at training commit 58f1717aeb50da25c8db7bbebe5bbd7c38a9e266.
 
-```
-torch.Size([3,224,224])
-```
-
----
-
-# 5. Generator-disjoint Experimental Split
-
-## 5.1 Split Strategy
-
-采用 generator-disjoint split，确保测试阶段的 fake generator 不出现在训练阶段，以评估模型面对 unseen generators 的泛化能力。
-
-## 5.2 Generator Allocation
-
-### Training Generators
-
-|Generator|Images|
-|-|-:|
-|ADM|2500|
-|BigGAN|2500|
-|stable_diffusion_v_1_5|2500|
-
-Fake images: 7500
-
-Real images: 3496
-
-Total: 10996
-
----
-
-### Validation Generator
-
-|Generator|Images|
-|-|-:|
-|VQDM|2500|
-
-Real images: 1166
-
-Total: 3666
-
----
-
-### Unseen Test Generators
-
-|Generator|Images|
-|-|-:|
-|glide|2500|
-|Midjourney|2500|
-|wukong|2500|
-
-Fake images: 7500
-
-Real images: 1166
-
-Total: 8666
-
----
-
-# 6. CSV Dataset Generation
-
-生成：
-
-```
-train.csv
-validation.csv
-test.csv
+```sh
+python -B m5/evaluate.py --mode check
+python -B m5/evaluate.py --mode predict
 ```
 
-每条记录包含：
-
-|字段|说明|
-|-|-|
-|image_path|图片相对路径|
-|label|real=0, fake=1|
-|generator|图片来源 generator|
-|split|train/validation/test|
-
----
-
-# 7. PyTorch Dataset Loader
-
-Dataset loader 负责：
-
-1. 从 CSV 读取图片路径；
-2. 加载图片；
-3. 应用统一 preprocessing；
-4. 返回模型输入。
-
-输出：
-
-```
-Image:
-[3,224,224]
-
-Label:
-0/1
-
-Generator:
-source generator
-```
-
-测试结果：
-
-```
-Image shape:
-torch.Size([4,3,224,224])
-
-Labels:
-tensor([1,1,0,0])
-
-Generators:
-['BigGAN',
- 'stable_diffusion_v_1_5',
- 'Nature',
- 'Nature']
-```
-
-说明：
-
-- 图片读取正常；
-- label 映射正确；
-- generator 信息保留；
-- preprocessing 成功应用。
-
----
-
-# 8. Member 1 Final Deliverables
-
-```
-Member1_Data/
-
-├── inspect_dataset.py
-├── check_image_properties.py
-├── resolution_analysis.py
-├── preprocessing.py
-├── create_split_csv.py
-├── dataset.py
-
-├── dataset_statistics.csv
-├── image_property_statistics.csv
-├── generator_resolution_analysis.csv
-
-├── train.csv
-├── validation.csv
-└── test.csv
-```
-
----
-
-# 9. Handover Notes
-
-后续模型成员直接使用：
-
-- train.csv
-- validation.csv
-- test.csv
-- dataset.py
-
-所有模型共享：
-
-- 相同数据划分；
-- 相同 preprocessing；
-- 相同输入尺寸 [3,224,224]。
-
-这样可以保证：
-
-- Spatial baseline；
-- Frequency model；
-- Feature fusion model；
-
-之间的实验公平性。
+Inference requires PyTorch and torchvision. The original-workspace verification script also uses the saved diagnostic run. Historical run records retain execution-time paths and source hashes.
