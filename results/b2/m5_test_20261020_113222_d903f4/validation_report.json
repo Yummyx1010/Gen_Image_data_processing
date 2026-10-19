@@ -1,0 +1,31 @@
+{
+  "status": "complete",
+  "models_verified": 3,
+  "images_per_model": 8666,
+  "total_prediction_rows": 25998,
+  "models": [
+    {
+      "model": "B2",
+      "seed": 42,
+      "csv": "B2_seed_42_predictions.csv",
+      "prediction_sha256": "db4cde26522dfd07e5791e42d9d02556417d887021eaa8e89f07265b6d24b4e7",
+      "rows": 8666
+    },
+    {
+      "model": "B2",
+      "seed": 123,
+      "csv": "B2_seed_123_predictions.csv",
+      "prediction_sha256": "459359cec66751eeb15e5553bb48403716dc8af1b49ca915ab3fe51b53956d7c",
+      "rows": 8666
+    },
+    {
+      "model": "B2",
+      "seed": 2026,
+      "csv": "B2_seed_2026_predictions.csv",
+      "prediction_sha256": "8a69bbd772d19c2218908266d5604d3e787e68eb7f60cc483e288579a8237b82",
+      "rows": 8666
+    }
+  ],
+  "full_outputs_match_trial": true,
+  "comparison_dir": "results/b2/comparison_20261020_115404_569299"
+}

@@ -1,0 +1,31 @@
+{
+  "repository_commit": "3a2735cae09d5fd8891cbfec3332b52a7369cac7",
+  "code_dir": "code",
+  "data_root": "data",
+  "test_csv": "code/test.csv",
+  "model_index": "logs/b2_model_index.json",
+  "image_manifest": "logs/test_image_manifest.json",
+  "code_manifest": "logs/code_manifest.json",
+  "results_dir": "results/b2",
+  "logs_dir": "logs/b2",
+  "models": ["B2"],
+  "seeds": [42, 123, 2026],
+  "training_learning_rate": 0.0009,
+  "batch_size": 32,
+  "device": "cpu",
+  "threshold": 0.5,
+  "expected_images": 8666,
+  "expected_generators": {
+    "Nature": 1166,
+    "glide": 2500,
+    "Midjourney": 2500,
+    "wukong": 2500
+  },
+  "expected_test_csv_sha256": "a24294768907b9dbdf22e98d35762a6b25aa3e138b3ec005994737117b394864",
+  "b2_source_sha256": {
+    "dataset.py": "aba33fd839b557c2fc4968ead6e21a5a660c0d111a9d4ffca9932a6fbfe8bce8",
+    "models/spatial_encoder.py": "ab2bd686f27f5f4e22af4c572b704956e0432e784220324f5508153414049f66",
+    "models/frequency_encoder_frozen.py": "8e9c0ce8d1c1f651bbc2c9e57b70aa746a81dc60e313694e3c367a97a24f9254",
+    "models/baseline_b_2.py": "00e9d3498e80fc4218da4c2ff711814c705554c9cb2598b28d4b98b2f2285a57"
+  }
+}

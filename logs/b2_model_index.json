@@ -1,0 +1,32 @@
+{
+  "commit": "3a2735cae09d5fd8891cbfec3332b52a7369cac7",
+  "models": [
+    {
+      "model": "B2",
+      "seed": 42,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B2/seed_42/best.pt",
+      "bytes": 90128762,
+      "sha256": "60c8a9384f0fc6d8d99fcb09da68bb8994ad42112c75a3b9b0b5a25b2b77afb2",
+      "original_repository_path": "results/baseline_b_2/lr_9e-4/baseline_b_2_seed42_20261019_161149_306456/best.pt"
+    },
+    {
+      "model": "B2",
+      "seed": 123,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B2/seed_123/best.pt",
+      "bytes": 90126778,
+      "sha256": "7f159cf965ec61bf17249e2ce22f5289fd35a954d85cfa23bce3ad819f001d86",
+      "original_repository_path": "results/baseline_b_2/lr_9e-4/baseline_b_2_seed123_20261019_152750_312361/best.pt"
+    },
+    {
+      "model": "B2",
+      "seed": 2026,
+      "learning_rate": 0.0009,
+      "checkpoint": "models/B2/seed_2026/best.pt",
+      "bytes": 90123770,
+      "sha256": "25f621f4ca30e25b62d519cb12b79ad03aa43e3cd005e629bbb322d0ce67f1ab",
+      "original_repository_path": "results/baseline_b_2/lr_9e-4/baseline_b_2_seed2026_20261019_170218_006952/best.pt"
+    }
+  ]
+}

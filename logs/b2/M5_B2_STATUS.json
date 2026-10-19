@@ -1,0 +1,35 @@
+{
+  "status": "full_test_scored",
+  "repository_commit": "3a2735cae09d5fd8891cbfec3332b52a7369cac7",
+  "diagnostic_run": "logs/b2/m5_diagnostic_20261020_113010_e9bf4c",
+  "images_per_diagnostic": 32,
+  "diagnostic_results": [
+    {
+      "seed": 42,
+      "rows": 32,
+      "best_epoch": 19,
+      "prediction_seconds": 1.3784312919015065
+    },
+    {
+      "seed": 123,
+      "rows": 32,
+      "best_epoch": 13,
+      "prediction_seconds": 1.305278958985582
+    },
+    {
+      "seed": 2026,
+      "rows": 32,
+      "best_epoch": 4,
+      "prediction_seconds": 1.2814533329801634
+    }
+  ],
+  "full_test_images_verified": 8666,
+  "original_prediction_files_verified_unchanged": 9,
+  "formal_inference_started": true,
+  "full_test_metrics_computed": true,
+  "b2_scoring_extension_prepared": true,
+  "entrypoint": "m5/evaluate_b2.py",
+  "config": "m5/evaluation_b2_config.json",
+  "full_run": "results/b2/m5_test_20261020_113222_d903f4",
+  "score_dir": "results/b2/comparison_20261020_120113_1bc6c1"
+}
