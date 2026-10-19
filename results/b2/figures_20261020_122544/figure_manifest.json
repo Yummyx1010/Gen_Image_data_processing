@@ -1,0 +1,74 @@
+{
+  "status": "complete",
+  "created_at": "2026-10-20T12:25:44.705559+13:00",
+  "models": [
+    "A",
+    "F",
+    "B",
+    "B2"
+  ],
+  "seeds": [
+    42,
+    123,
+    2026
+  ],
+  "images_per_checkpoint": 8666,
+  "generator_cohort": {
+    "fake": 2500,
+    "shared_real": 1166
+  },
+  "cross_generator_sd_ddof": 0,
+  "seed_errorbar_sd_ddof": 1,
+  "inputs": [
+    {
+      "path": "results/b2/comparison_20261020_120113_1bc6c1/scores.json",
+      "sha256": "9540ef79c8c14307151d1d7726e412b57a53a82e5038c46fc3d64c661ddf6bd8"
+    },
+    {
+      "path": "results/b2/comparison_20261020_120113_1bc6c1/per_generator_metrics.csv",
+      "sha256": "1e2191ebae1b3571eb3008a638d1d8eae665e4799145c531692c54fa8d23a137"
+    },
+    {
+      "path": "results/b2/comparison_20261020_120113_1bc6c1/per_seed_stability.csv",
+      "sha256": "a692e05ee841ff550b3efba2f71b1e1694da3a41709b07a608e8d9985f6f7d89"
+    },
+    {
+      "path": "results/b2/comparison_20261020_120113_1bc6c1/generator_summary.csv",
+      "sha256": "7d36bc30f34496f4d891ec9a7d6dd1b79f29213e7b1602622ae58e107253b39b"
+    },
+    {
+      "path": "results/b2/comparison_20261020_120113_1bc6c1/model_summary.csv",
+      "sha256": "9a03e7717583140d9b415ca10520ac8f529a5bf83ebdaafbb30400b249a2f676"
+    }
+  ],
+  "builder": {
+    "path": "m5/plot_b2_comparison.R",
+    "sha256": "c76b28853226e29cff6fbdc4de7476de09503181d30905e3c4345ab81b7d99d1"
+  },
+  "outputs": [
+    {
+      "file": "01_AUROC_by_generator_B2.png",
+      "sha256": "72909f9fbf537599285d60918351b6c06b593a60a82c7997366c242391ad5854",
+      "width": 3240,
+      "height": 1890,
+      "dpi": 300
+    },
+    {
+      "file": "02_mean_and_consistency_B2.png",
+      "sha256": "9595dabd413a5f96386dfc24fcbe0abc8e9298379069cbeb652be2cf343bc74b",
+      "width": 3300,
+      "height": 1770,
+      "dpi": 300
+    }
+  ],
+  "plotted_values_checked_against_score_tables": true,
+  "original_figures_unchanged": true,
+  "console": "Created two B2 comparison figures; plotted means and SDs match the score tables.\n",
+  "visual_review_passed": true,
+  "reviewed_at": "2026-10-20T12:26:17.669628+13:00",
+  "visual_checks": [
+    "labels and legend readable",
+    "no clipped content or overlapping labels",
+    "four-model means and error bars agree with score tables"
+  ]
+}

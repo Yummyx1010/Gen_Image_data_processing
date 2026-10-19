@@ -5,6 +5,7 @@ The original A, F and B models were evaluated with seeds 42, 123 and 2026. All n
 ## Start here
 
 - [B2 comparison: A, F, B and B2](results/b2/comparison_20261020_120113_1bc6c1/model_summary.csv)
+- [B2 comparison figures and captions](results/b2/figures_20261020_122544/FIGURES.md)
 - [B2 prediction run](results/b2/m5_test_20261020_113222_d903f4/run_report.json)
 
 - [Original A/F/B results and conclusion](logs/M5_metrics_summary.md)
@@ -40,6 +41,10 @@ All three B2 checkpoints were evaluated on the same complete test set. The table
 
 B2 improved mean AUROC over A, but its cross-generator SD was higher and its worst-generator AUROC was slightly lower. It therefore improved average detection performance without improving cross-generator consistency over A under this setting. The original A/F/B experiment is retained.
 
+![AUROC by unseen generator](results/b2/figures_20261020_122544/01_AUROC_by_generator_B2.png)
+
+![Mean AUROC and cross-generator consistency](results/b2/figures_20261020_122544/02_mean_and_consistency_B2.png)
+
 ## Contents
 
 | Folder | Contents |
@@ -70,6 +75,12 @@ python -B m5/score_b2_comparison.py --run-dir results/b2/m5_test_20261020_113222
 ```
 
 This scoring step requires scikit-learn and uses the submitted prediction CSVs; model weights and the full image dataset are not needed.
+
+To recreate the B2 comparison figures with base R, choose a new output folder:
+
+```sh
+Rscript --vanilla m5/plot_b2_comparison.R results/b2/comparison_20261020_120113_1bc6c1 results/b2/figures_recreated
+```
 
 ## Repeat image inference
 
