@@ -1,0 +1,45 @@
+{
+  "model": "baseline_b_2",
+  "architecture": "m3_frozen_frequency_concat_v1",
+  "seed": 2026,
+  "learning_rate": 0.0009,
+  "weight_decay": 0.0001,
+  "batch_size": 32,
+  "maximum_epochs": 30,
+  "epochs_completed": 15,
+  "best_epoch": 4,
+  "best_validation_loss": 0.34410625733577416,
+  "best_validation_AUROC": 0.9426631217838766,
+  "best_validation_metrics_at_best_loss": {
+    "accuracy": 0.8537915984724496,
+    "precision": 0.9443438914027149,
+    "recall": 0.8348,
+    "auroc": 0.9346775300171528
+  },
+  "best_validation_metrics_at_best_auroc": {
+    "accuracy": 0.8066012002182215,
+    "precision": 0.9623128549303046,
+    "recall": 0.7456,
+    "auroc": 0.9426631217838766
+  },
+  "selection_metric": "validation_auroc",
+  "selected_checkpoint_validation_loss": 0.4281387867754558,
+  "selected_checkpoint_validation_AUROC": 0.9426631217838766,
+  "training_seconds": 1703.0463433000004,
+  "hardware": {
+    "device": "cuda",
+    "torch": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_total_memory_gb": 6.0
+  },
+  "checkpoint_path": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing_main\\results\\baseline_b_2\\lr_9e-4\\baseline_b_2_seed2026_20261019_170218_006952\\best.pt",
+  "last_checkpoint_path": "F:\\AAA-nz-auckland-homework\\760\\Gen_Image_data_processing_main\\results\\baseline_b_2\\lr_9e-4\\baseline_b_2_seed2026_20261019_170218_006952\\last.pt",
+  "stop_reason": "early_stopping",
+  "sampling": "balanced training only; official validation distribution",
+  "frozen_encoders": [
+    "spatial",
+    "frequency_backbone",
+    "frequency_projection"
+  ]
+}
