@@ -1,0 +1,32 @@
+{
+  "phase": "baseline_b_2_lr9e-4",
+  "architecture": "m3_frozen_frequency_concat_v1",
+  "model_description": "Baseline B_2: frozen spatial ResNet-18 plus M3's fully frozen frequency ResNet-18 and 512-to-256 projection; concatenate 512+256 features and train only Linear(768, 1). The projection is seeded but not pretrained.",
+  "model_source": [
+    "models/spatial_encoder.py",
+    "models/frequency_encoder_frozen.py",
+    "models/baseline_b_2.py"
+  ],
+  "freeze_frequency_backbone": true,
+  "freeze_frequency_encoder": true,
+  "learning_rate_candidates": [
+    0.0009
+  ],
+  "learning_rate": 0.0009,
+  "max_epochs": 30,
+  "early_stopping_enabled": true,
+  "early_stopping_warmup_epochs": 10,
+  "early_stopping_patience": 5,
+  "early_stopping_min_delta": 0.0,
+  "batch_size": 32,
+  "sampler": "WeightedRandomSampler",
+  "loss": "BCEWithLogitsLoss",
+  "optimizer": "Adam",
+  "weight_decay": 0.0001,
+  "grad_clip": 1.0,
+  "selection_metric": "validation_auroc",
+  "hidden_dim": null,
+  "dropout": null,
+  "device": "cuda",
+  "output_dir": "results/baseline_b_2"
+}

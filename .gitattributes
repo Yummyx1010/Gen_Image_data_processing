@@ -9,3 +9,5 @@
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.JPEG filter=lfs diff=lfs merge=lfs -text
+/train_baseline_b_2.py -text
+/train_baseline_b_2_lr2e-3.py -text
